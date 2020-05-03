@@ -3,6 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 import { withAuthenticator } from 'aws-amplify-react';
+import { AmplifyTheme } from 'aws-amplify-react';
+
+const MySectionHeader = Object.assign({}, AmplifyTheme.sectionHeader, { background: 'orange' });
+const MyTheme = Object.assign({}, AmplifyTheme, { sectionHeader: MySectionHeader });
 
 class App extends Component {
   render() {
@@ -27,5 +31,4 @@ class App extends Component {
   }
 }
 
-export default withAuthenticator(App);
-//export default App;
+export default withAuthenticator(App, false, [], null, MyTheme);
