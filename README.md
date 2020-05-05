@@ -15,3 +15,11 @@ amplify push
 yarn add aws-amplify aws-amplify-react aws-amplify-react-native
 npm start
 ```
+
+## Docker
+```
+#build
+docker build -t amplify-react .
+#run
+docker run -v ${PWD}:/app -v /app/node_modules -p 8080:80 amplify-react
+```
