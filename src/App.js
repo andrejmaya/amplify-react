@@ -18,7 +18,6 @@ class App extends Component {
     startDate: new Date(),
     endDate: new Date()
   };
-
   handleStartDateChange = date => {
     this.setState({
       startDate: date
@@ -39,62 +38,54 @@ class App extends Component {
       error: null,
       results: [],
       api: "https://0jlnpsgena.execute-api.eu-central-1.amazonaws.com/dev",
-      query: "",
       key: "?api-key=gXMMGjNcvg6wBE5RCLvB57sCdQDNRZjd6UuOk72z"      
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleChange = this.handleChange.bind(this);    
   }
 
-  handleCategory = (e) => {
-    //const cat = e.target.getAttribute('data-facet');
-    console.log("handleCategory")
-    fetch(this.state.api + this.state.query + this.state.key,{
-      crossDomain:true,
-      method: 'POST',
-      headers: {'Content-Type':'application/json',"Access-Control-Allow-Origin": "*"}
+  async handleSubmit(event) {
+    event.preventDefault();
+    
+    const { name, message } = this.state;
+    axios.post( this.state.api + this.state.key,{ startDate: this.state.startDate, endDate: this.state.endDate }
+    )
+    .then(res => {
+      const results = res.data;
+      console.log(results)
+      this.setState({ results: res.data, isLoading: false})
     })
-      .then(response => {
-        if (response.ok && response.json()) {
-          console.log("response -> ok")
-          console.log(response)
-          return response.json();
-        } else {
-          console.log("response -> else")
-          throw new Error('Oops')
-        }
-      })
-      .then(data => {
-        console.log("SUCCESS")
-        this.setState({ results: data.results, isLoading: false})
-      })
-      .catch(error => {
-        console.log("ERROR")
-        console.log(error)
-        this.setState({ error, isLoading: false })
-      })    
-  } 
+  }  
+
   render() {
     const { isLoading, results, error } = this.state;
 
     if (isLoading) {
      
       return (
-        <form>
-        <div className="row">
-        <label htmlFor="startDate">startDate</label>: 
-        <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleStartDateChange}
-        />
+        <div className="float-left">
+          <form onSubmit={this.handleSubmit}>
+            <div className="row">
+              <label htmlFor="startDate">startDate</label>: 
+              <DatePicker
+              name="startDate"
+              selected={this.state.startDate}
+              onChange={this.handleStartDateChange}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="endDate">endDate </label>
+              <DatePicker
+              name="endDate"
+              selected={this.state.endDate}
+              onChange={this.handleEndDateChange}
+              />
+            </div>
+            <div className="row">
+              <button type="submit">Send</button>
+            </div>
+          </form>
         </div>
-        <div className="row">
-        <label htmlFor="endDate">endDate </label>
-        <DatePicker
-        selected={this.state.endDate}
-        onChange={this.handleEndDateChange}
-        />
-        </div>
-        <button type="button" onClick={this.handleCategory}>Submit</button>
-      </form>
       )
     }
 
@@ -103,15 +94,26 @@ class App extends Component {
     }
 
     return (
-      <div className="wrapper">
-        <button data-facet="arts" onClick={this.handleCategory}>Arts</button>
-        {results.slice(0, 10).map(result => (
-            <div className="cards__card" key={result.title}>
-              <a href={result.url} target="_blank"><h5>{result.title}</h5></a>
-              <p>{result.abstract}</p>
-            </div>
-          ))}        
-      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">title</th>
+            <th scope="col">url</th>
+            <th scope="col">abstract</th>
+          </tr>
+        </thead>
+        <tbody>
+          {results.map((result, index) => (
+            <tr>
+              <th scope="row">{index}</th>
+              <td>{result.title}</td>
+              <td>{result.url}</td>
+              <td>{result.abstract}</td>
+            </tr>            
+            ))}  
+        </tbody>
+      </table>
     );    
   }
 }
