@@ -20,7 +20,7 @@ jobs:
     - run: npm ci
     - run: npm install
     - run: touch ./src/aws-exports.js
-    - run: npm run build --if-present
+    - run: CI=false npm run build --if-present
 
 
   build-docker:
@@ -30,5 +30,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: touch ./src/aws-exports.js
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+        touch ./src/aws-exports.js
+        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
