@@ -1,7 +1,21 @@
+# AWS Amplify React Docker Fargate Github Actions Example
+![NPM, Docker, Fargate Pipeline](https://github.com/andrejmaya/amplify-react/workflows/Amplify-react%20Pipeline/badge.svg)
+
 ## Prerequisites
 * npm
 * node
 * yarn
+* ECR repository (see `ECR_REPOSITORY` in [pipeline.yml](./.github/workflows/pipeline.yml))
+* Amplify IAM user with `AdministratorAccess` policy
+* Github Actions IAM user with these policies:
+  * `AmazonEC2FullAccess`
+  * `IAMFullAccess`
+  * `ElasticLoadBalancingFullAccess`
+  * `CloudWatchLogsFullAccess`
+  * `AmazonECS_FullAccess`
+  * `AmazonEC2ContainerRegistryPowerUser`
+  * `AWSCloudFormationFullAccess`
+
 
 ## Getting started
 

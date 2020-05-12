@@ -1,0 +1,31 @@
+{
+  "containerDefinitions": [ 
+     { 
+        "image": "874352008702.dkr.ecr.eu-west-1.amazonaws.com/amplify-react",
+        "logConfiguration": { 
+           "logDriver": "awslogs",
+           "options": { 
+              "awslogs-group" : "/ecs/fargate-task-definition",
+              "awslogs-region": "eu-west-1",
+              "awslogs-stream-prefix": "ecs"
+           }
+        },
+        "name": "amplify-react",
+        "portMappings": [ 
+           { 
+              "containerPort": 80,
+              "hostPort": 80,
+              "protocol": "tcp"
+           }
+        ]
+     }
+  ],
+  "cpu": "256",
+  "executionRoleArn": "arn:aws:iam::874352008702:role/am_ecsTaskExecutionRole",
+  "family": "fargate-task-definition",
+  "memory": "512",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [ 
+      "FARGATE" 
+   ]
+}
