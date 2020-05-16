@@ -37,8 +37,8 @@ class App extends Component {
       results: [],
       error: null,
       results: [],
-      api: "https://0jlnpsgena.execute-api.eu-central-1.amazonaws.com/dev",
-      key: "?api-key=gXMMGjNcvg6wBE5RCLvB57sCdQDNRZjd6UuOk72z"      
+      api: "https://example.execute-api.eu-central-1.amazonaws.com/dev",
+      key: "?api-key=secret"      
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     //this.handleChange = this.handleChange.bind(this);    
